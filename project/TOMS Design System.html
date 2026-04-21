@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TOMS Design System — Direction A</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Surfaces */
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+    /* Text */
+    --text: #0f172a;
+    --muted: #64748b;
+    --faint: #94a3b8;
+    /* Brand */
+    --brand: #1e3a8a;
+    --accent: #1d4ed8;
+    --accent-hi: #2563eb;
+    --accent-soft: #eff4ff;
+    /* Semantic */
+    --success: #16a34a;
+    --warn: #d97706;
+    --danger: #dc2626;
+    /* Type */
+    --font: "Inter", -apple-system, system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    /* Radius */
+    --r-xs: 3px; --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px; --r-pill: 999px;
+    /* Shadow */
+    --s-sm: 0 1px 2px rgba(15,23,42,.05);
+    --s-md: 0 2px 8px rgba(15,23,42,.06);
+    --s-lg: 0 8px 24px rgba(15,23,42,.1);
+    --s-xl: 0 24px 60px rgba(15,23,42,.18);
+    --s-focus: 0 0 0 3px rgba(29,78,216,.18);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font); letter-spacing: -0.05px; }
+  body { font-size: 14px; line-height: 1.5; }
+
+  /* Layout */
+  .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sidebar { position: sticky; top: 0; height: 100vh; background: #fff; border-right: 1px solid var(--border);
+    padding: 20px 14px; overflow-y: auto; }
+  .main { padding: 40px 56px 120px; max-width: 1100px; }
+
+  /* Sidebar */
+  .brand-row { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+  .brand-text { font-weight: 700; font-size: 18px; letter-spacing: -0.3px; color: var(--brand); }
+  .nav-group { font-size: 10.5px; font-weight: 600; color: var(--faint);
+    letter-spacing: 0.8px; text-transform: uppercase; padding: 14px 10px 6px; }
+  .nav a { display: block; padding: 6px 10px; font-size: 13px; color: var(--muted);
+    text-decoration: none; border-radius: 5px; margin-bottom: 1px; transition: .1s; }
+  .nav a:hover { background: #f1f5f9; color: var(--text); }
+  .nav a.active { background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+
+  /* Typography in doc */
+  h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.8px; margin: 0 0 6px; }
+  h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.4px; margin: 48px 0 4px;
+    padding-top: 32px; border-top: 1px solid var(--border); }
+  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 28px; }
+  h3 { font-size: 15px; font-weight: 600; margin: 28px 0 12px; letter-spacing: -0.1px; }
+  .lede { font-size: 15px; color: var(--muted); max-width: 720px; margin: 0 0 4px; }
+  .section-desc { font-size: 13.5px; color: var(--muted); max-width: 720px; margin: 8px 0 18px; }
+  .doc-meta { display: flex; gap: 16px; font-size: 11.5px; color: var(--faint);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-top: 20px; }
+  .doc-meta span b { color: var(--muted); font-weight: 600; }
+
+  /* Grids / panels */
+  .grid { display: grid; gap: 14px; }
+  .g-3 { grid-template-columns: repeat(3, 1fr); }
+  .g-4 { grid-template-columns: repeat(4, 1fr); }
+  .g-6 { grid-template-columns: repeat(6, 1fr); }
+  .g-auto { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); }
+  .panel-pad { padding: 20px; }
+
+  /* Color swatches */
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; background: var(--card); }
+  .swatch-chip { aspect-ratio: 2/1; width: 100%; }
+  .swatch-meta { padding: 10px 12px; }
+  .swatch-label { font-size: 12.5px; font-weight: 600; }
+  .swatch-hex { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .swatch-var { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-top: 2px; }
+
+  /* Ramp */
+  .ramp { display: grid; grid-template-columns: repeat(9, 1fr); border-radius: var(--r-md);
+    overflow: hidden; border: 1px solid var(--border); }
+  .ramp > div { height: 56px; display: flex; align-items: flex-end; padding: 6px 8px;
+    font-family: var(--mono); font-size: 10px; }
+
+  /* Type specimens */
+  .type-spec { display: grid; grid-template-columns: 140px 1fr; gap: 20px; align-items: baseline;
+    padding: 14px 0; border-bottom: 1px dashed var(--border); }
+  .type-spec:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+  .type-meta div { margin-bottom: 2px; }
+
+  /* Spacing */
+  .sp-row { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
+  .sp-bar { background: var(--accent); height: 12px; border-radius: 2px; }
+  .sp-label { width: 60px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .sp-px { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+
+  /* Radius samples */
+  .r-tile { aspect-ratio: 1/1; background: var(--accent-soft); border: 1px solid #dbeafe;
+    display: flex; align-items: end; justify-content: center; padding: 10px;
+    font-family: var(--mono); font-size: 11px; color: var(--accent); }
+
+  /* Shadow samples */
+  .shadow-tile { aspect-ratio: 4/3; background: #fff; border-radius: var(--r-lg);
+    display: flex; align-items: end; padding: 12px;
+    font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* Components */
+  .demo { padding: 24px; background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r-lg); }
+  .demo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .demo-row + .demo-row { margin-top: 14px; }
+  .demo-label { width: 100%; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--faint); font-weight: 600; margin-bottom: 2px; }
+
+  /* Button */
+  .btn { display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: var(--r-md); font-family: var(--font);
+    font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent;
+    transition: .12s; letter-spacing: -0.05px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hi); }
+  .btn-secondary { background: #fff; color: var(--text); border-color: var(--border); }
+  .btn-secondary:hover { background: #f8fafc; border-color: var(--border-strong); }
+  .btn-ghost { background: transparent; color: var(--muted); }
+  .btn-ghost:hover { background: #f1f5f9; color: var(--text); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+  /* Chip */
+  .chip { display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; font-size: 11.5px; font-weight: 500; border-radius: 4px;
+    border: 1px solid; letter-spacing: 0.1px; }
+  .chip-neutral { background: #f1f5f9; color: #334155; border-color: #e2e8f0; }
+  .chip-success { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+  .chip-warn { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+  .chip-danger { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+  .chip-brand { background: var(--accent-soft); color: var(--accent); border-color: #dbeafe; }
+
+  /* Status dot */
+  .dot { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; }
+  .dot::before { content: ''; width: 7px; height: 7px; border-radius: 4px; }
+  .dot-online::before { background: var(--success); box-shadow: 0 0 0 3px #16a34a26; }
+  .dot-offline::before { background: #94a3b8; }
+  .dot-warn::before { background: var(--warn); box-shadow: 0 0 0 3px #d9770626; }
+
+  /* Inventory badge */
+  .inv { display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px; border-radius: 11px; font-size: 11.5px; font-weight: 500;
+    border: 1px solid; letter-spacing: 0.1px; }
+  .inv::before { content: ''; width: 6px; height: 6px; border-radius: 3px; }
+  .inv-use { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+  .inv-use::before { background: #10b981; }
+  .inv-stock { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .inv-stock::before { background: #3b82f6; }
+  .inv-trn { background: #f5f3ff; color: #7c3aed; border-color: #ddd6fe; }
+  .inv-trn::before { background: #8b5cf6; }
+  .inv-lock { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
+  .inv-lock::before { background: #475569; }
+  .inv-rep { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+  .inv-rep::before { background: #f59e0b; }
+  .inv-lost { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+  .inv-lost::before { background: #ef4444; }
+  .inv-ret { background: #f8fafc; color: #64748b; border-color: #e2e8f0; }
+  .inv-ret::before { background: #94a3b8; }
+
+  /* Inputs */
+  .input { display: flex; align-items: center; gap: 6px; padding: 6px 10px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md);
+    font-size: 12.5px; min-width: 260px; color: var(--text); }
+  .input input { border: none; background: transparent; outline: none; flex: 1;
+    font-family: inherit; color: inherit; font-size: 12.5px; }
+  .input:focus-within { background: #fff; border-color: var(--accent); box-shadow: var(--s-focus); }
+  .select { padding: 6px 10px; font-size: 12.5px; border: 1px solid var(--border);
+    border-radius: var(--r-md); background: #fff; font-family: inherit; color: var(--text); cursor: pointer; }
+
+  /* Toggle */
+  .toggle { position: relative; width: 36px; height: 20px; border-radius: 10px;
+    background: #e5e7eb; border: none; cursor: pointer; transition: .15s; }
+  .toggle::after { content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 8px; background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: .15s; }
+  .toggle.on { background: var(--accent); }
+  .toggle.on::after { left: 18px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+  .tab { padding: 10px 14px; font-size: 13px; font-weight: 500; color: var(--muted);
+    border-bottom: 2px solid transparent; cursor: pointer; transition: .1s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { font-size: 11.5px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.3px; text-align: left;
+    padding: 10px 12px; background: #f8fafc; border-bottom: 1px solid var(--border); }
+  tbody td { padding: 11px 12px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: #f8fafc; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* Card example */
+  .card-ex { background: #fff; border: 1px solid var(--border); border-radius: var(--r-lg); }
+  .card-ex-hd { display: flex; align-items: center; padding: 12px 16px;
+    border-bottom: 1px solid var(--border); }
+  .card-ex-hd h4 { margin: 0; font-size: 13.5px; font-weight: 600; letter-spacing: -0.1px; }
+  .card-ex-bd { padding: 16px; font-size: 13px; color: var(--muted); }
+
+  /* Icon grid */
+  .icon-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+  .icon-cell { aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; background: #fff; border: 1px solid var(--border); border-radius: var(--r-md); color: var(--muted); }
+  .icon-cell svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-cell span { font-size: 10px; font-family: var(--mono); color: var(--faint); }
+
+  /* Code block */
+  pre { background: #0f172a; color: #cbd5e1; font-family: var(--mono); font-size: 11.5px;
+    padding: 14px 16px; border-radius: var(--r-md); overflow-x: auto; line-height: 1.7; margin: 12px 0; }
+  code { font-family: var(--mono); font-size: 12px; background: #f1f5f9; color: #334155;
+    padding: 1px 6px; border-radius: 3px; }
+
+  /* Do/Don't */
+  .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+  .dd { padding: 14px 16px; border-radius: var(--r-md); border: 1px solid; }
+  .dd-good { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+  .dd-bad { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+  .dd-hd { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand-row">
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+      <defs>
+        <linearGradient id="sg" x1="4" y1="8" x2="36" y2="34" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#22D3EE" />
+          <stop offset="0.55" stop-color="#2563EB" />
+          <stop offset="1" stop-color="#6D28D9" />
+        </linearGradient>
+      </defs>
+      <path d="M13 14 A8.5 8.5 0 0 1 27 14" stroke="url(#sg)" stroke-width="3.4" stroke-linecap="round" fill="none" />
+      <path d="M20 22 C 16 16, 8 16, 8 22 C 8 28, 16 28, 20 22 C 24 16, 32 16, 32 22 C 32 28, 24 28, 20 22 Z" fill="url(#sg)" />
+    </svg>
+    <span class="brand-text">TOMS / DS</span>
+  </div>
+  <nav class="nav">
+    <div class="nav-group">Foundations</div>
+    <a href="#intro" class="active">Introduction</a>
+    <a href="#brand">Brand</a>
+    <a href="#color">Color</a>
+    <a href="#typography">Typography</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#radius">Radius &amp; shadow</a>
+    <a href="#motion">Motion</a>
+    <a href="#icons">Iconography</a>
+
+    <div class="nav-group">Components</div>
+    <a href="#buttons">Buttons</a>
+    <a href="#chips">Chips &amp; status</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#tabs">Tabs</a>
+    <a href="#cards">Cards</a>
+    <a href="#tables">Tables</a>
+    <a href="#nav">Navigation</a>
+    <a href="#feedback">Feedback</a>
+
+    <div class="nav-group">Patterns</div>
+    <a href="#status">Device status</a>
+    <a href="#command">Command flow</a>
+    <a href="#dodont">Do &amp; don't</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+<section id="intro">
+  <h1>TOMS Design System</h1>
+  <p class="lede">Direction A — Refined Enterprise. A clear, calm, information-dense
+    system anchored in TOMS blue. Designed for operators who spend hours a day inside
+    the platform managing fleets, pushing apps, and resolving incidents.</p>
+  <div class="doc-meta">
+    <span><b>Version</b> 1.0</span>
+    <span><b>Direction</b> A · Refined Enterprise</span>
+    <span><b>Base font</b> Inter</span>
+    <span><b>Base unit</b> 4px</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════ BRAND ═══════════════════════ -->
+<section id="brand">
+  <h2>Brand</h2>
+  <p class="section-desc">The mark pairs a cloud crown (infrastructure) with an infinity loop (always-on device fleet). Gradient runs cyan → blue → violet to signal real-time telemetry.</p>
+  <div class="grid g-3" style="margin-top: 20px;">
+    <div class="panel panel-pad" style="display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 140px;">
+      <svg width="64" height="64" viewBox="0 0 40 40" fill="none">
+        <defs><linearGradient id="bg1" x1="4" y1="8" x2="36" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22D3EE" /><stop offset="0.55" stop-color="#2563EB" /><stop offset="1" stop-color="#6D28D9" /></linearGradient></defs>
+        <path d="M13 14 A8.5 8.5 0 0 1 27 14" stroke="url(#bg1)" stroke-width="3.4" stroke-linecap="round" fill="none" />
+        <path d="M20 22 C 16 16, 8 16, 8 22 C 8 28, 16 28, 20 22 C 24 16, 32 16, 32 22 C 32 28, 24 28, 20 22 Z" fill="url(#bg1)" />
+      </svg>
+    </div>
+    <div class="panel panel-pad" style="display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 140px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <defs><linearGradient id="bg2" x1="4" y1="8" x2="36" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22D3EE" /><stop offset="0.55" stop-color="#2563EB" /><stop offset="1" stop-color="#6D28D9" /></linearGradient></defs>
+        <path d="M13 14 A8.5 8.5 0 0 1 27 14" stroke="url(#bg2)" stroke-width="3.4" stroke-linecap="round" fill="none" />
+        <path d="M20 22 C 16 16, 8 16, 8 22 C 8 28, 16 28, 20 22 C 24 16, 32 16, 32 22 C 32 28, 24 28, 20 22 Z" fill="url(#bg2)" />
+      </svg>
+      <span style="font-weight: 700; font-size: 28px; color: var(--brand); letter-spacing: -0.6px;">TOMS</span>
+    </div>
+    <div class="panel panel-pad" style="background: var(--brand); display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 140px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <defs><linearGradient id="bg3" x1="4" y1="8" x2="36" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#22D3EE" /><stop offset="0.55" stop-color="#2563EB" /><stop offset="1" stop-color="#6D28D9" /></linearGradient></defs>
+        <path d="M13 14 A8.5 8.5 0 0 1 27 14" stroke="url(#bg3)" stroke-width="3.4" stroke-linecap="round" fill="none" />
+        <path d="M20 22 C 16 16, 8 16, 8 22 C 8 28, 16 28, 20 22 C 24 16, 32 16, 32 22 C 32 28, 24 28, 20 22 Z" fill="url(#bg3)" />
+      </svg>
+      <span style="font-weight: 700; font-size: 28px; color: #fff; letter-spacing: -0.6px;">TOMS</span>
+    </div>
+  </div>
+  <h3>Clear space &amp; minimum size</h3>
+  <ul style="color: var(--muted); font-size: 13.5px;">
+    <li>Minimum size: 20px tall for the mark, 18px for the wordmark.</li>
+    <li>Clear space: the height of the mark's cloud crown on all sides.</li>
+    <li>On photography, always place the mark inside a solid container.</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════ COLOR ═══════════════════════ -->
+<section id="color">
+  <h2>Color</h2>
+  <p class="section-desc">Neutrals carry 90% of the interface. Blue is reserved for interactive elements, primary CTAs, and identity. Semantic colors communicate system state — use them sparingly.</p>
+
+  <h3>Core palette</h3>
+  <div class="grid g-4">
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #1e3a8a;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Brand</div><div class="swatch-hex">#1E3A8A</div><div class="swatch-var">--brand</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #1d4ed8;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Accent</div><div class="swatch-hex">#1D4ED8</div><div class="swatch-var">--accent</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #2563eb;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Accent High</div><div class="swatch-hex">#2563EB</div><div class="swatch-var">--accent-hi</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #eff4ff;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Accent Soft</div><div class="swatch-hex">#EFF4FF</div><div class="swatch-var">--accent-soft</div></div>
+    </div>
+  </div>
+
+  <h3>Neutrals</h3>
+  <div class="ramp">
+    <div style="background: #ffffff; color: #0f172a;">#FFF</div>
+    <div style="background: #f6f7f9; color: #0f172a;">#F6F7F9</div>
+    <div style="background: #f1f5f9; color: #0f172a;">#F1F5F9</div>
+    <div style="background: #e5e7eb; color: #0f172a;">#E5E7EB</div>
+    <div style="background: #d1d5db; color: #0f172a;">#D1D5DB</div>
+    <div style="background: #94a3b8; color: #fff;">#94A3B8</div>
+    <div style="background: #64748b; color: #fff;">#64748B</div>
+    <div style="background: #334155; color: #fff;">#334155</div>
+    <div style="background: #0f172a; color: #fff;">#0F172A</div>
+  </div>
+  <div style="display: flex; gap: 16px; margin-top: 8px; font-size: 11.5px; color: var(--muted);">
+    <span><code>--bg</code> #F6F7F9</span>
+    <span><code>--border</code> #E5E7EB</span>
+    <span><code>--text-muted</code> #64748B</span>
+    <span><code>--text</code> #0F172A</span>
+  </div>
+
+  <h3>Semantic</h3>
+  <div class="grid g-3">
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #16a34a;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Success / Online</div><div class="swatch-hex">#16A34A</div><div class="swatch-var">soft · #ECFDF5</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #d97706;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Warn / Updating</div><div class="swatch-hex">#D97706</div><div class="swatch-var">soft · #FFFBEB</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background: #dc2626;"></div>
+      <div class="swatch-meta"><div class="swatch-label">Danger / Alert</div><div class="swatch-hex">#DC2626</div><div class="swatch-var">soft · #FEF2F2</div></div>
+    </div>
+  </div>
+
+  <h3>Inventory status</h3>
+  <p class="section-desc" style="margin: 0 0 14px;">Inventory is a device-lifecycle dimension, independent of connectivity. Seven states cover the fleet.</p>
+  <div class="grid g-auto">
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-use">In Use</span><div class="swatch-hex" style="margin-top: 6px;">#10B981 · #ECFDF5</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-stock">In Stock</span><div class="swatch-hex" style="margin-top: 6px;">#3B82F6 · #EFF6FF</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-trn">Transferring</span><div class="swatch-hex" style="margin-top: 6px;">#8B5CF6 · #F5F3FF</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-lock">Locked</span><div class="swatch-hex" style="margin-top: 6px;">#475569 · #F1F5F9</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-rep">Repair</span><div class="swatch-hex" style="margin-top: 6px;">#F59E0B · #FFFBEB</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-lost">Lost</span><div class="swatch-hex" style="margin-top: 6px;">#EF4444 · #FEF2F2</div></div>
+    <div class="panel panel-pad" style="padding: 12px 14px;"><span class="inv inv-ret">Retired</span><div class="swatch-hex" style="margin-top: 6px;">#94A3B8 · #F8FAFC</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TYPOGRAPHY ═══════════════════════ -->
+<section id="typography">
+  <h2>Typography</h2>
+  <p class="section-desc">Inter for all UI copy. JetBrains Mono for identifiers, hex codes, telemetry, and code. Body size is 13.5 px — dense enough for data rows but comfortable to read.</p>
+
+  <div class="panel panel-pad" style="margin-top: 18px;">
+    <div class="type-spec">
+      <div class="type-meta"><div>Display / H1</div><div>700 · 36 / 44</div><div>-0.8px tracking</div></div>
+      <div style="font-size: 36px; font-weight: 700; letter-spacing: -0.8px;">Manage your fleet.</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Title / H2</div><div>600 · 22 / 30</div><div>-0.4px tracking</div></div>
+      <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.4px;">Push firmware · D1.0.06</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Section / H3</div><div>600 · 16 / 22</div></div>
+      <div style="font-size: 16px; font-weight: 600;">App &amp; Firmware</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Body</div><div>400 · 13.5 / 20</div></div>
+      <div style="font-size: 13.5px;">Terminal is online and reporting telemetry every 30 seconds from the Frankfurt warehouse.</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Label / meta</div><div>500 · 12 / 16</div><div>+0.1 tracking</div></div>
+      <div style="font-size: 12px; font-weight: 500; color: var(--muted);">Last seen · 2 seconds ago</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Overline</div><div>600 · 11 / 14</div><div>Uppercase · +0.8</div></div>
+      <div style="font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px;">Connectivity</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Mono / identifier</div><div>JetBrains Mono · 12 / 16</div></div>
+      <div style="font-family: var(--mono); font-size: 12px;">SN: NEC400084496</div>
+    </div>
+    <div class="type-spec">
+      <div class="type-meta"><div>Numeric / KPI</div><div>600 · 26 / 30</div><div>Tabular nums</div></div>
+      <div style="font-size: 26px; font-weight: 600; letter-spacing: -0.6px; font-variant-numeric: tabular-nums;">1,247</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SPACING ═══════════════════════ -->
+<section id="spacing">
+  <h2>Spacing</h2>
+  <p class="section-desc">Based on a 4px unit. Use the scale for all padding, margin, and gap values. Layouts breathe with 16–24px between components and 4–8px inside them.</p>
+
+  <div class="panel panel-pad" style="margin-top: 18px;">
+    <div class="sp-row"><span class="sp-label">space-1</span><div class="sp-bar" style="width: 4px;"></div><span class="sp-px">4px</span></div>
+    <div class="sp-row"><span class="sp-label">space-2</span><div class="sp-bar" style="width: 8px;"></div><span class="sp-px">8px</span></div>
+    <div class="sp-row"><span class="sp-label">space-3</span><div class="sp-bar" style="width: 12px;"></div><span class="sp-px">12px</span></div>
+    <div class="sp-row"><span class="sp-label">space-4</span><div class="sp-bar" style="width: 16px;"></div><span class="sp-px">16px</span></div>
+    <div class="sp-row"><span class="sp-label">space-5</span><div class="sp-bar" style="width: 20px;"></div><span class="sp-px">20px</span></div>
+    <div class="sp-row"><span class="sp-label">space-6</span><div class="sp-bar" style="width: 24px;"></div><span class="sp-px">24px</span></div>
+    <div class="sp-row"><span class="sp-label">space-8</span><div class="sp-bar" style="width: 32px;"></div><span class="sp-px">32px</span></div>
+    <div class="sp-row"><span class="sp-label">space-10</span><div class="sp-bar" style="width: 40px;"></div><span class="sp-px">40px</span></div>
+    <div class="sp-row"><span class="sp-label">space-12</span><div class="sp-bar" style="width: 56px;"></div><span class="sp-px">56px</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ RADIUS & SHADOW ═══════════════════════ -->
+<section id="radius">
+  <h2>Radius &amp; shadow</h2>
+  <p class="section-desc">Radii are moderate — enough to feel modern, never pill-shaped except for tags and dots. Shadows stay low and cool so depth reads as elevation, not glow.</p>
+
+  <h3>Corner radius</h3>
+  <div class="grid g-6">
+    <div class="r-tile" style="border-radius: 3px;">3px · xs</div>
+    <div class="r-tile" style="border-radius: 4px;">4px · sm</div>
+    <div class="r-tile" style="border-radius: 6px;">6px · md</div>
+    <div class="r-tile" style="border-radius: 8px;">8px · lg</div>
+    <div class="r-tile" style="border-radius: 12px;">12px · xl</div>
+    <div class="r-tile" style="border-radius: 999px;">full</div>
+  </div>
+
+  <h3>Elevation</h3>
+  <div class="grid g-4" style="background: var(--bg); padding: 24px; border-radius: var(--r-lg); border: 1px solid var(--border);">
+    <div class="shadow-tile" style="box-shadow: var(--s-sm);">sm — row hover</div>
+    <div class="shadow-tile" style="box-shadow: var(--s-md);">md — card resting</div>
+    <div class="shadow-tile" style="box-shadow: var(--s-lg);">lg — popover / menu</div>
+    <div class="shadow-tile" style="box-shadow: var(--s-xl);">xl — modal</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MOTION ═══════════════════════ -->
+<section id="motion">
+  <h2>Motion</h2>
+  <p class="section-desc">Motion is functional, not decorative. Interactions complete in 100–180 ms. Progress and state changes can breathe longer.</p>
+  <div class="grid g-3" style="margin-top: 18px;">
+    <div class="panel panel-pad">
+      <div class="swatch-label">Hover / Press</div>
+      <div style="font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 4px;">120ms · ease-out</div>
+      <p style="margin: 10px 0 0; font-size: 12.5px; color: var(--muted);">Background, border, color transitions.</p>
+    </div>
+    <div class="panel panel-pad">
+      <div class="swatch-label">Panel / Tab</div>
+      <div style="font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 4px;">180ms · cubic-bezier(.2,.7,.3,1)</div>
+      <p style="margin: 10px 0 0; font-size: 12.5px; color: var(--muted);">Layout swap, tab underline, drawer.</p>
+    </div>
+    <div class="panel panel-pad">
+      <div class="swatch-label">Live signal pulse</div>
+      <div style="font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 4px;">2s · ease-in-out · infinite</div>
+      <p style="margin: 10px 0 0; font-size: 12.5px; color: var(--muted);">Online dot halo, progress indeterminate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ICONS ═══════════════════════ -->
+<section id="icons">
+  <h2>Iconography</h2>
+  <p class="section-desc">Stroke-based icons at 1.6px weight. 18px default size. Use <code>currentColor</code> so icons inherit surrounding text.</p>
+
+  <div class="icon-grid" style="margin-top: 18px;">
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4-4"/></svg><span>search</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>plus</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg><span>minus</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg><span>close</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg><span>chev</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.4"/><circle cx="5" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg><span>more</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><span>download</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 7"/><path d="M21 3v5h-5"/></svg><span>refresh</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/></svg><span>card</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><span>device</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 18 0"/><path d="M7 12a5 5 0 0 1 10 0"/><circle cx="12" cy="12" r="1.5"/></svg><span>wifi</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="13" height="8" rx="1.5"/><rect x="19" y="10" width="2" height="4"/></svg><span>battery</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>clock</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6"/><circle cx="12" cy="12" r="3"/></svg><span>settings</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"/></svg><span>shield</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 3h18M3 9h18M3 15h18M3 21h18"/></svg><span>rows</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ BUTTONS ═══════════════════════ -->
+<section id="buttons">
+  <h2>Buttons</h2>
+  <p class="section-desc">One primary action per screen region. Secondary for common operations, ghost for tertiary, danger only for destructive or irreversible actions.</p>
+
+  <div class="demo">
+    <div class="demo-row"><div class="demo-label">Primary</div>
+      <button class="btn btn-primary">Push firmware</button>
+      <button class="btn btn-primary btn-sm">Save</button>
+      <button class="btn btn-primary" style="padding: 9px 18px; font-size: 14px;">Register terminal</button>
+    </div>
+    <div class="demo-row"><div class="demo-label">Secondary</div>
+      <button class="btn btn-secondary">Export CSV</button>
+      <button class="btn btn-secondary btn-sm">Edit</button>
+      <button class="btn btn-secondary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>
+        Download
+      </button>
+    </div>
+    <div class="demo-row"><div class="demo-label">Ghost &amp; Danger</div>
+      <button class="btn btn-ghost">Cancel</button>
+      <button class="btn btn-ghost btn-sm">Clear</button>
+      <button class="btn btn-danger">Factory reset</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CHIPS ═══════════════════════ -->
+<section id="chips">
+  <h2>Chips &amp; status</h2>
+  <p class="section-desc">Chips carry categorical metadata. Status dots communicate live system state. Both can coexist on a row — a chip is <em>what</em> it is, a dot is <em>how</em> it's doing.</p>
+
+  <div class="demo">
+    <div class="demo-row"><div class="demo-label">Chip tones</div>
+      <span class="chip chip-neutral">DMB</span>
+      <span class="chip chip-brand">Production</span>
+      <span class="chip chip-success">Synced</span>
+      <span class="chip chip-warn">Pending</span>
+      <span class="chip chip-danger">Failed</span>
+    </div>
+    <div class="demo-row"><div class="demo-label">Connectivity dot</div>
+      <span class="dot dot-online">Online</span>
+      <span class="dot dot-offline">Offline</span>
+      <span class="dot dot-warn">Updating</span>
+    </div>
+    <div class="demo-row"><div class="demo-label">Inventory status</div>
+      <span class="inv inv-use">In Use</span>
+      <span class="inv inv-stock">In Stock</span>
+      <span class="inv inv-trn">Transferring</span>
+      <span class="inv inv-lock">Locked</span>
+      <span class="inv inv-rep">Repair</span>
+      <span class="inv inv-lost">Lost</span>
+      <span class="inv inv-ret">Retired</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ INPUTS ═══════════════════════ -->
+<section id="inputs">
+  <h2>Inputs</h2>
+  <p class="section-desc">Inputs sit on the surface color by default and invert to white on focus. Labels sit above, help text below, errors replace help text.</p>
+
+  <div class="demo">
+    <div class="demo-row"><div class="demo-label">Text</div>
+      <div class="input" style="min-width: 320px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="m20 20-4-4"/></svg>
+        <input placeholder="Search SN, name, model, deployment…" />
+      </div>
+      <select class="select">
+        <option>All groups</option>
+        <option>DMB</option>
+        <option>North-EU</option>
+      </select>
+    </div>
+    <div class="demo-row"><div class="demo-label">Toggle</div>
+      <button class="toggle"></button>
+      <button class="toggle on"></button>
+      <span style="font-size: 12.5px; color: var(--muted);">Off / On states. 36 × 20, 10px knob travel.</span>
+    </div>
+    <div class="demo-row"><div class="demo-label">Segmented</div>
+      <div style="display: inline-flex; gap: 2px; padding: 3px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border);">
+        <button class="btn btn-sm" style="background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.06);">All</button>
+        <button class="btn btn-sm" style="background: transparent; color: var(--muted);">Online</button>
+        <button class="btn btn-sm" style="background: transparent; color: var(--muted);">Offline</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TABS ═══════════════════════ -->
+<section id="tabs">
+  <h2>Tabs</h2>
+  <p class="section-desc">Primary tabs sit directly below the page hero and use a 2px underline in accent blue. Keep tab counts under 6 per view.</p>
+
+  <div class="demo" style="padding: 0;">
+    <div class="tabs" style="padding: 0 24px;">
+      <div class="tab active">Overview</div>
+      <div class="tab">Basic Info</div>
+      <div class="tab">App &amp; Firmware</div>
+      <div class="tab">Settings</div>
+      <div class="tab">Remote Assistance</div>
+    </div>
+    <div style="padding: 20px 24px; font-size: 13px; color: var(--muted);">Active tab content renders here.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CARDS ═══════════════════════ -->
+<section id="cards">
+  <h2>Cards</h2>
+  <p class="section-desc">Cards are the primary container. 8px radius, 1px border, no shadow at rest. Header rule at 1px, 20px padding.</p>
+
+  <div class="grid g-3" style="margin-top: 18px;">
+    <div class="card-ex">
+      <div class="card-ex-hd"><h4>Basic card</h4></div>
+      <div class="card-ex-bd">Title + body. Used for most content blocks.</div>
+    </div>
+    <div class="card-ex">
+      <div class="card-ex-hd">
+        <h4>Card with action</h4>
+        <div style="margin-left: auto;"><span class="chip chip-brand">Live</span></div>
+      </div>
+      <div class="card-ex-bd">Right-aligned slot for chips or buttons.</div>
+    </div>
+    <div class="card-ex">
+      <div class="card-ex-hd">
+        <h4>KPI card</h4>
+      </div>
+      <div style="padding: 16px 20px;">
+        <div style="font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.2px; font-weight: 500;">Online</div>
+        <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 5px;">
+          <div style="font-size: 26px; font-weight: 600; color: var(--success); letter-spacing: -0.6px; font-variant-numeric: tabular-nums;">247</div>
+          <div style="font-size: 11.5px; color: var(--success); font-weight: 500;">+12</div>
+        </div>
+        <div style="font-size: 11.5px; color: var(--muted); margin-top: 2px;">of 38 total</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TABLES ═══════════════════════ -->
+<section id="tables">
+  <h2>Tables</h2>
+  <p class="section-desc">Dense by default — 11–12px row padding. Headers are 11.5px uppercase. Rows are clickable; entire row highlights on hover.</p>
+
+  <div style="background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 18px;">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 36px;"><input type="checkbox"/></th>
+          <th>Terminal</th>
+          <th>Connectivity</th>
+          <th>Inventory</th>
+          <th>Group</th>
+          <th>Firmware</th>
+          <th>Last active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"/></td>
+          <td>
+            <div style="font-weight: 600;">TestAppSigner121</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--muted);">NEC400084496</div>
+          </td>
+          <td><span class="dot dot-online">Online</span></td>
+          <td><span class="inv inv-use">In Use</span></td>
+          <td><span class="chip chip-neutral">DMB</span></td>
+          <td style="font-family: var(--mono);">D1.0.06</td>
+          <td style="color: var(--muted); font-variant-numeric: tabular-nums;">2s ago</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"/></td>
+          <td>
+            <div style="font-weight: 600;">StoreTerminal204</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--muted);">NEC400092817</div>
+          </td>
+          <td><span class="dot dot-offline">Offline</span></td>
+          <td><span class="inv inv-stock">In Stock</span></td>
+          <td><span class="chip chip-neutral">North-EU</span></td>
+          <td style="font-family: var(--mono);">D1.0.04</td>
+          <td style="color: var(--muted); font-variant-numeric: tabular-nums;">3d ago</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"/></td>
+          <td>
+            <div style="font-weight: 600;">POS-Bay-177</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--muted);">NEC400115230</div>
+          </td>
+          <td><span class="dot dot-offline">Offline</span></td>
+          <td><span class="inv inv-rep">Repair</span></td>
+          <td><span class="chip chip-neutral">LATAM</span></td>
+          <td style="font-family: var(--mono);">D1.0.05</td>
+          <td style="color: var(--muted); font-variant-numeric: tabular-nums;">1d ago</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
+<section id="nav">
+  <h2>Navigation</h2>
+  <p class="section-desc">Left rail: 240px, white, with 12px group overlines. Top bar: 52px with breadcrumb, page-level tools, and user chip.</p>
+
+  <div style="background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 18px;">
+    <!-- fake topbar -->
+    <div style="height: 52px; display: flex; align-items: center; gap: 14px; padding: 0 20px; border-bottom: 1px solid var(--border);">
+      <span style="color: var(--faint);">☰</span>
+      <div style="font-size: 13px; color: var(--muted);">
+        <span style="color: var(--faint);">TMS</span>
+        <span style="margin: 0 8px; color: var(--faint);">/</span>
+        <span style="color: var(--accent); font-weight: 500;">Terminals</span>
+        <span style="margin: 0 8px; color: var(--faint);">/</span>
+        <span style="color: var(--text); font-weight: 600; font-family: var(--mono);">NEC400084496</span>
+      </div>
+      <div style="flex: 1;"></div>
+      <span class="dot dot-online">Online</span>
+      <span class="inv inv-use">In Use</span>
+      <div style="width: 26px; height: 26px; border-radius: 13px; background: linear-gradient(135deg,#60a5fa,#1e40af); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 600;">LY</div>
+    </div>
+    <!-- hero -->
+    <div style="padding: 20px 24px; background: #fafbfc;">
+      <div style="font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; font-weight: 600;">Terminal</div>
+      <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.4px; margin-top: 2px;">TestAppSigner121</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEEDBACK ═══════════════════════ -->
+<section id="feedback">
+  <h2>Feedback</h2>
+  <p class="section-desc">Banners for page-level system state. Inline for form-level. Toasts for transient acknowledgements.</p>
+
+  <div class="grid" style="gap: 10px; margin-top: 18px;">
+    <div style="padding: 12px 16px; background: #eff4ff; border: 1px solid #dbeafe; border-radius: 6px; font-size: 13px; color: var(--accent); display: flex; align-items: center; gap: 10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 17h.01"/></svg>
+      A new firmware D1.0.06 is available. <a href="#" style="margin-left: auto; color: inherit; font-weight: 500;">Review →</a>
+    </div>
+    <div style="padding: 12px 16px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; font-size: 13px; color: #047857; display: flex; align-items: center; gap: 10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 5 5L20 6"/></svg>
+      Command delivered · acknowledged 12:34:02
+    </div>
+    <div style="padding: 12px 16px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; font-size: 13px; color: #b45309; display: flex; align-items: center; gap: 10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg>
+      12 terminals need attention — scheduled update did not complete.
+    </div>
+    <div style="padding: 12px 16px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-size: 13px; color: #b91c1c; display: flex; align-items: center; gap: 10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+      Factory reset failed · terminal unreachable since 09:04
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ DEVICE STATUS PATTERN ═══════════════════════ -->
+<section id="status">
+  <h2>Device status — a two-dimensional model</h2>
+  <p class="section-desc">Every terminal has two independent status dimensions. <b>Connectivity</b> answers "can we talk to it?"; <b>inventory</b> answers "what is its lifecycle state?". Display them together — never collapse into one field.</p>
+
+  <div class="grid g-3" style="margin-top: 18px;">
+    <div class="panel panel-pad">
+      <h4 style="margin: 0 0 8px; font-size: 13.5px;">Connectivity</h4>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span class="dot dot-online">Online</span>
+        <span class="dot dot-offline">Offline</span>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin: 12px 0 0;">Pulses while reporting. Derived from last-seen heartbeat within 90 s.</p>
+    </div>
+    <div class="panel panel-pad" style="grid-column: span 2;">
+      <h4 style="margin: 0 0 8px; font-size: 13.5px;">Inventory</h4>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span class="inv inv-use">In Use</span>
+        <span class="inv inv-stock">In Stock</span>
+        <span class="inv inv-trn">Transferring</span>
+        <span class="inv inv-lock">Locked</span>
+        <span class="inv inv-rep">Repair</span>
+        <span class="inv inv-lost">Lost</span>
+        <span class="inv inv-ret">Retired</span>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin: 12px 0 0;">Operator-managed lifecycle. Changes via Transfer, Lock, Decommission actions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ COMMAND FLOW ═══════════════════════ -->
+<section id="command">
+  <h2>Command flow</h2>
+  <p class="section-desc">Every remote command goes through the same three states: Confirm → Running → Done. Destructive commands add an extra typed-confirm step.</p>
+  <pre>action
+  ↓  confirm modal (secondary · primary/danger)
+  ↓  running (indeterminate progress · 30s ack window)
+  ↓  done (success toast · device timestamp)</pre>
+</section>
+
+<!-- ═══════════════════════ DO & DON'T ═══════════════════════ -->
+<section id="dodont">
+  <h2>Do &amp; don't</h2>
+  <div class="dodont">
+    <div class="dd dd-good">
+      <div class="dd-hd">✓ Do</div>
+      Show connectivity and inventory as independent signals. Use the dot for connectivity, the pill for inventory.
+    </div>
+    <div class="dd dd-bad">
+      <div class="dd-hd">✗ Don't</div>
+      Collapse both into one status column — "Offline / Repair" is two facts, not one.
+    </div>
+    <div class="dd dd-good">
+      <div class="dd-hd">✓ Do</div>
+      Reserve danger red for destructive actions. Use warn amber for recoverable issues.
+    </div>
+    <div class="dd dd-bad">
+      <div class="dd-hd">✗ Don't</div>
+      Style routine warnings in red — operators will numb to real alerts.
+    </div>
+    <div class="dd dd-good">
+      <div class="dd-hd">✓ Do</div>
+      Keep monospace for identifiers (SN, MAC, IP, firmware). It aids scanning.
+    </div>
+    <div class="dd dd-bad">
+      <div class="dd-hd">✗ Don't</div>
+      Mix serial numbers into proportional text — they become hard to compare.
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+</body>
+</html>
